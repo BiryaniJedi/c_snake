@@ -245,6 +245,21 @@ int main() {
       return 1;
     }
 
+    // Draw grid outlines
+    if (SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255) < 0) {
+      printf("Setting Renderer Color failed: %s\n", SDL_GetError());
+      return 1;
+    }
+    for (uint16_t i = 0; i <= SCREEN_WIDTH_PX - SNAKE_WIDTH_PX;
+         i += SNAKE_WIDTH_PX) {
+      for (uint16_t j = 0; j <= SCREEN_HEIGHT_PX - SNAKE_HEIGHT_PX;
+           j += SNAKE_HEIGHT_PX) {
+        tempRect.x = i;
+        tempRect.y = j;
+        SDL_RenderDrawRect(renderer, &tempRect);
+      }
+    }
+
     // Draw Food
     if (SDL_SetRenderDrawColor(renderer, 98, 187, 232, 255) < 0) {
       printf("Setting Renderer Color failed: %s\n", SDL_GetError());
@@ -274,13 +289,13 @@ int main() {
       lastMoveTime = SDL_GetTicks64();
       if (!moveSnake(snake.direction, &snake, &food, window)) {
         running = false;
-        printf("You Lose!\n");
+        printf("You Lose! Score: %d\n", snake.currLength);
       }
 
       // Win Condition
       if (snake.currLength == MAX_SNAKE_LENGTH) {
         running = false;
-        printf("You win!\n");
+        printf("You win! You reached the scored of %d!\n", MAX_SNAKE_LENGTH);
       }
     }
   }
