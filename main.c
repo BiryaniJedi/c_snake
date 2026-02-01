@@ -80,6 +80,7 @@ bool moveSnake(Uint8 direction, Snake *snake, Position *food,
       return false;
     }
   }
+
   // growing mechanic
   if (curr_head_pos.x == food->x && curr_head_pos.y == food->y) {
     snake->currLength++;
@@ -243,21 +244,6 @@ int main() {
     if (SDL_RenderClear(renderer) < 0) {
       printf("Clearing Renderer with Color failed: %s\n", SDL_GetError());
       return 1;
-    }
-
-    // Draw grid outlines
-    if (SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255) < 0) {
-      printf("Setting Renderer Color failed: %s\n", SDL_GetError());
-      return 1;
-    }
-    for (uint16_t i = 0; i <= SCREEN_WIDTH_PX - SNAKE_WIDTH_PX;
-         i += SNAKE_WIDTH_PX) {
-      for (uint16_t j = 0; j <= SCREEN_HEIGHT_PX - SNAKE_HEIGHT_PX;
-           j += SNAKE_HEIGHT_PX) {
-        tempRect.x = i;
-        tempRect.y = j;
-        SDL_RenderDrawRect(renderer, &tempRect);
-      }
     }
 
     // Draw Food
